@@ -74,6 +74,26 @@ public class lab1 {
         return str.matches("^[0-9]+$");
     }
 
+    public static int checkInitalInput() {
+        boolean flag = true;
+        int ans = 0;
+        while (flag) {
+
+            String userInput = scanner.next();
+            if (isKey(userInput)) {
+                ans = Integer.parseInt(userInput) % 26;
+                flag = false;
+            } else {
+                System.out.println("press a valid key between 1-4");
+            }
+        }
+        return ans;
+    }
+
+    public static boolean isCmd(String str) {
+        return str.matches("[0-4]");
+    }
+
     public static void Encryption(String text, long key) {
 
         StringBuffer result = new StringBuffer();
@@ -134,7 +154,7 @@ public class lab1 {
             System.out.println("3 to Rowbustway");
             System.out.println("4 to Exit");
 
-            int userInput = scanner.nextInt();
+            int userInput = checkInitalInput();
 
             if (userInput == 4) {
                 System.out.println("Exiting program...");
