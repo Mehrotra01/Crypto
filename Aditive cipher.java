@@ -129,6 +129,10 @@ public class lab1 {
 
     public static void robustway(String pText, String cText) {
 
+        if(pText.length()==cText.length()){
+            System.out.println("You have Entered the wrong Input");
+        }
+
         for (int i = 0; i < 26; i++) {
             int c = (int) cText.charAt(0) - 65;
 
