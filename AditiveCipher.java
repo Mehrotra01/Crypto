@@ -1,13 +1,15 @@
+
+// Additive Cipher
+// Caesar Cipher
 import java.util.Scanner;
 
-public class MultiplicativeCipher {
+public class AditiveCipher {
     static Scanner scanner = new Scanner(System.in);
     static char ARR[] = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S',
             'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
     static char arr[] = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's',
             't', 'u', 'v', 'w', 'x', 'y', 'z' };
 
-        static int index[] ={1,3,5,7,9,11,15,17,19,21,23,25};
     public static String checkPlainString() {
         boolean flag = true;
         String str = "";
@@ -75,7 +77,6 @@ public class MultiplicativeCipher {
     public static int checkInitalInput() {
         boolean flag = true;
         int ans = 0;
-
         while (flag) {
 
             String userInput = scanner.next();
@@ -92,12 +93,13 @@ public class MultiplicativeCipher {
     public static boolean isCmd(String str) {
         return str.matches("[0-4]");
     }
+
     public static void Encryption(String text, long key) {
 
         StringBuffer result = new StringBuffer();
 
         for (int i = 0; i < text.length(); i++) {
-            long ch = (long) ((((int) text.charAt(i) - 97) * key) % 26);
+            long ch = (long) ((((int) text.charAt(i) - 97) + key) % 26);
             // System.out.println((int)text.charAt(i) - 97);
             result.append(ARR[(int) ch]);
             ch = 0;
@@ -109,28 +111,15 @@ public class MultiplicativeCipher {
     public static void Decryption(String text, long key) {
         StringBuffer result = new StringBuffer();
 
-
-        long kInverse=0;
-        //only these values have an actuall inverse in multiplicative inverse
-//        int inverse[]=[1,9,21,15,3,19,7,23,11,5,17,25];
-
-        for(int z=0;z<index.length;z++){
-            //p * n = 1 mod 26
-            //1==p*nmod 26
-            long CHACHA = (key * index[z])%26;
-//            System.out.println(kInverse+"U");
-
-            if(CHACHA==1){
-                kInverse=index[z];
-                break;
-            }
-        }
-
         for (int i = 0; i < text.length(); i++) {
             int c = (int) text.charAt(i) - 65;
-//            System.out.println(kInverse+"U");
-
-            long ch = (long) ((c * kInverse ) % 26);
+            if (c < key) {
+                c += 26;
+            }
+            long ch = (long) ((c - key) % 26);
+            // System.out.println((int) text.charAt(i));
+            // System.out.println(c);
+            // System.out.println(ch);
             result.append(arr[(int) ch]);
             ch = 0;
         }
@@ -142,31 +131,17 @@ public class MultiplicativeCipher {
 
         if(pText.length()==cText.length()){
             System.out.println("You have Entered the wrong Input");
-            return;
         }
 
-            int pos =0;
-            for(;pos<pText.length();pos++){
-                if(pText.charAt(pos)!='a'){
-                    break;
-                }
+        for (int i = 0; i < 26; i++) {
+            int c = (int) cText.charAt(0) - 65;
+
+            if (c < i) {
+                c += 26;
             }
+            int ch = ((c - i) % 26);
 
-
-        for (int i = 0; i < index.length; i++) {
-        long kInverse=0;
-        for(int z=0;z<index.length;z++){
-            long CHACHA = ( i * index[z])%26;
-            if(CHACHA==1){
-                kInverse=index[z];
-                break;
-            }
-        }
-            int c = (int) cText.charAt(pos) - 65;
-
-            int ch = ((c * (int)kInverse) % 26);
-
-            if (arr[ch] == pText.charAt(pos)) {
+            if (arr[ch] == pText.charAt(0)) {
                 System.out.println("Your key is " + i);
                 break;
             }
@@ -182,7 +157,6 @@ public class MultiplicativeCipher {
             System.out.println("2 to Decryption");
             System.out.println("3 to Rowbustway");
             System.out.println("4 to Exit");
-
 
             int userInput = checkInitalInput();
 
