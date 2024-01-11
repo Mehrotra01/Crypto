@@ -7,7 +7,8 @@ public class MultiplicativeCipher {
     static char arr[] = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's',
             't', 'u', 'v', 'w', 'x', 'y', 'z' };
 
-        static int index[] ={1,3,5,7,9,11,15,17,19,21,23,25};
+    static int index[] = { 1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 23, 25 };
+
     public static String checkPlainString() {
         boolean flag = true;
         String str = "";
@@ -92,6 +93,7 @@ public class MultiplicativeCipher {
     public static boolean isCmd(String str) {
         return str.matches("[0-4]");
     }
+
     public static void Encryption(String text, long key) {
 
         StringBuffer result = new StringBuffer();
@@ -109,28 +111,27 @@ public class MultiplicativeCipher {
     public static void Decryption(String text, long key) {
         StringBuffer result = new StringBuffer();
 
+        long kInverse = 0;
+        // only these values have an actuall inverse in multiplicative inverse
+        // int inverse[]=[1,9,21,15,3,19,7,23,11,5,17,25];
 
-        long kInverse=0;
-        //only these values have an actuall inverse in multiplicative inverse
-//        int inverse[]=[1,9,21,15,3,19,7,23,11,5,17,25];
+        for (int z = 0; z < index.length; z++) {
+            // p * n = 1 mod 26
+            // 1==p*nmod 26
+            long CHACHA = (key * index[z]) % 26;
+            // System.out.println(kInverse+"U");
 
-        for(int z=0;z<index.length;z++){
-            //p * n = 1 mod 26
-            //1==p*nmod 26
-            long CHACHA = (key * index[z])%26;
-//            System.out.println(kInverse+"U");
-
-            if(CHACHA==1){
-                kInverse=index[z];
+            if (CHACHA == 1) {
+                kInverse = index[z];
                 break;
             }
         }
 
         for (int i = 0; i < text.length(); i++) {
             int c = (int) text.charAt(i) - 65;
-//            System.out.println(kInverse+"U");
+            // System.out.println(kInverse+"U");
 
-            long ch = (long) ((c * kInverse ) % 26);
+            long ch = (long) ((c * kInverse) % 26);
             result.append(arr[(int) ch]);
             ch = 0;
         }
@@ -140,31 +141,30 @@ public class MultiplicativeCipher {
 
     public static void robustway(String pText, String cText) {
 
-        if(pText.length()==cText.length()){
+        if (pText.length() != cText.length()) {
             System.out.println("You have Entered the wrong Input");
             return;
         }
 
-            int pos =0;
-            for(;pos<pText.length();pos++){
-                if(pText.charAt(pos)!='a'){
-                    break;
-                }
-            }
-
-
-        for (int i = 0; i < index.length; i++) {
-        long kInverse=0;
-        for(int z=0;z<index.length;z++){
-            long CHACHA = ( i * index[z])%26;
-            if(CHACHA==1){
-                kInverse=index[z];
+        int pos = 0;
+        for (; pos < pText.length(); pos++) {
+            if (pText.charAt(pos) != 'a') {
                 break;
             }
         }
+
+        for (int i = 0; i < index.length; i++) {
+            long kInverse = 0;
+            for (int z = 0; z < index.length; z++) {
+                long CHACHA = (i * index[z]) % 26;
+                if (CHACHA == 1) {
+                    kInverse = index[z];
+                    break;
+                }
+            }
             int c = (int) cText.charAt(pos) - 65;
 
-            int ch = ((c * (int)kInverse) % 26);
+            int ch = ((c * (int) kInverse) % 26);
 
             if (arr[ch] == pText.charAt(pos)) {
                 System.out.println("Your key is " + i);
@@ -182,7 +182,6 @@ public class MultiplicativeCipher {
             System.out.println("2 to Decryption");
             System.out.println("3 to Rowbustway");
             System.out.println("4 to Exit");
-
 
             int userInput = checkInitalInput();
 

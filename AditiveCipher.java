@@ -129,8 +129,9 @@ public class AditiveCipher {
 
     public static void robustway(String pText, String cText) {
 
-        if(pText.length()==cText.length()){
+        if(pText.length()!=cText.length()){
             System.out.println("You have Entered the wrong Input");
+            return;
         }
 
         for (int i = 0; i < 26; i++) {
