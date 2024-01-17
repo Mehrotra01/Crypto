@@ -1,6 +1,3 @@
-
-// Additive Cipher
-// Caesar Cipher
 import java.util.Scanner;
 
 public class AditiveCipher {
@@ -13,12 +10,11 @@ public class AditiveCipher {
     public static String checkPlainString() {
         boolean flag = true;
         String str = "";
-        String ans="";
+        String ans = "";
         while (flag) {
 
             do {
-                System.out.print("Enter a non-empty string with small alphabets and spaces: ");
-                ans = scanner.nextLine().trim(); 
+                ans = scanner.nextLine().trim();
             } while (ans.isEmpty());
 
             System.out.println(ans);
@@ -40,11 +36,10 @@ public class AditiveCipher {
     public static String checkCypherString() {
         boolean flag = true;
         String str = "";
-        String ans ="";
+        String ans = "";
         while (flag) {
             do {
-                System.out.print("Enter a non-empty string with capital alphabets and spaces: ");
-                ans = scanner.nextLine().trim(); 
+                ans = scanner.nextLine().trim();
             } while (ans.isEmpty());
 
             if (isCypherText(ans)) {
@@ -71,7 +66,6 @@ public class AditiveCipher {
             if (isKey(userInput)) {
                 ans = Integer.parseInt(userInput) % 26;
                 flag = false;
-                System.out.println("The input is a valid integer: " + userInput);
                 System.out.println("Your key is " + ans);
             } else {
                 System.out.println("Enter a valid key");
@@ -109,15 +103,12 @@ public class AditiveCipher {
         StringBuffer result = new StringBuffer();
 
         for (int i = 0; i < text.length(); i++) {
-            if((int) text.charAt(i) ==32){
+            if ((int) text.charAt(i) == 32) {
                 result.append(" ");
                 continue;
             }
-            int c= (int) text.charAt(i) - 97;
-            System.out.println(text.charAt(i));
-            if(c<key){
-                c+=26;
-            }
+            int c = (int) text.charAt(i) - 97;
+
             long ch = (long) ((c + key) % 26);
             result.append(ARR[(int) ch]);
             ch = 0;
@@ -130,7 +121,7 @@ public class AditiveCipher {
         StringBuffer result = new StringBuffer();
 
         for (int i = 0; i < text.length(); i++) {
-            if((int) text.charAt(i) ==32){
+            if ((int) text.charAt(i) == 32) {
                 result.append(" ");
                 continue;
             }
@@ -148,13 +139,12 @@ public class AditiveCipher {
 
     public static void robustway(String pText, String cText) {
 
-        if(pText.length()!=cText.length()){
+        if (pText.length() != cText.length()) {
             System.out.println("You have Entered the wrong Input");
             return;
         }
 
         for (int i = 0; i < 26; i++) {
-            
             int c = (int) cText.charAt(0) - 65;
 
             if (c < i) {
