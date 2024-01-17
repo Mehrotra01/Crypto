@@ -80,7 +80,7 @@ public class MultiplicativeCipher {
         while (flag) {
 
             String userInput = scanner.next();
-            if (isKey(userInput)) {
+            if (isCmd(userInput)) {
                 ans = Integer.parseInt(userInput) % 26;
                 flag = false;
             } else {
