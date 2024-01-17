@@ -12,15 +12,13 @@ public class MultiplicativeCipher {
     public static String checkPlainString() {
         boolean flag = true;
         String str = "";
-        String ans="";
+        String ans = "";
         while (flag) {
 
             do {
-                System.out.print("Enter a non-empty string with small alphabets and spaces: ");
-                ans = scanner.nextLine().trim(); 
+                ans = scanner.nextLine().trim();
             } while (ans.isEmpty());
 
-            System.out.println(ans);
             if (isPlainText(ans)) {
                 flag = false;
                 str = ans;
@@ -39,11 +37,10 @@ public class MultiplicativeCipher {
     public static String checkCypherString() {
         boolean flag = true;
         String str = "";
-        String ans ="";
+        String ans = "";
         while (flag) {
             do {
-                System.out.print("Enter a non-empty string with capital alphabets and spaces: ");
-                ans = scanner.nextLine().trim(); 
+                ans = scanner.nextLine().trim();
             } while (ans.isEmpty());
 
             if (isCypherText(ans)) {
@@ -79,17 +76,16 @@ public class MultiplicativeCipher {
         return ans;
     }
 
-
     public static boolean isKey(String str) {
-        boolean fl=false;
-        if(str.matches("^[0-9]+$")){
-            int intValue = Integer.parseInt(str)%26;
-            fl =isValidKey(intValue);
+        boolean fl = false;
+        if (str.matches("^[0-9]+$")) {
+            int intValue = Integer.parseInt(str) % 26;
+            fl = isValidKey(intValue);
         }
-        return fl ;
+        return fl;
     }
 
-    public static boolean isValidKey(int x){
+    public static boolean isValidKey(int x) {
         boolean found = false;
         for (int number : index) {
             if (number == x) {
@@ -97,7 +93,7 @@ public class MultiplicativeCipher {
                 break;
             }
         }
-        if(!found){
+        if (!found) {
             System.out.println("enter a valid num");
         }
         return found;
@@ -125,22 +121,20 @@ public class MultiplicativeCipher {
 
     public static void Encryption(String text, long key) {
 
-        
-        
         StringBuffer result = new StringBuffer();
-        
+
         for (int i = 0; i < text.length(); i++) {
-            if((int) text.charAt(i) ==32){
+            if ((int) text.charAt(i) == 32) {
                 result.append(" ");
                 continue;
             }
 
-            int c= (int) text.charAt(i) - 97;
+            int c = (int) text.charAt(i) - 97;
             System.out.println(text.charAt(i));
-            if(c<key){
-                c+=26;
+            if (c < key) {
+                c += 26;
             }
-            long ch = (long) (( c * key) % 26);
+            long ch = (long) ((c * key) % 26);
             result.append(ARR[(int) ch]);
             ch = 0;
         }
@@ -149,23 +143,22 @@ public class MultiplicativeCipher {
     }
 
     public static void Decryption(String text, long key) {
-        System.out.println("yes");
         StringBuffer result = new StringBuffer();
-        
+
         long kInverse = 0;
-        
+
         for (int z = 0; z < index.length; z++) {
             long CHACHA = (key * index[z]) % 26;
-            
+
             if (CHACHA == 1) {
                 kInverse = index[z];
                 break;
             }
         }
-        
+
         for (int i = 0; i < text.length(); i++) {
 
-            if((int) text.charAt(i) ==32){
+            if ((int) text.charAt(i) == 32) {
                 result.append(" ");
                 continue;
             }
@@ -176,7 +169,7 @@ public class MultiplicativeCipher {
             result.append(arr[(int) ch]);
             ch = 0;
         }
-        System.out.println("your Cipher text " + text); 
+        System.out.println("your Cipher text " + text);
         System.out.println("your plain text: " + result);
     }
 
@@ -193,7 +186,7 @@ public class MultiplicativeCipher {
                 break;
             }
         }
-
+        // System.out.println(pos);
         for (int i = 0; i < index.length; i++) {
             long kInverse = 0;
             for (int z = 0; z < index.length; z++) {
