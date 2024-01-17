@@ -12,9 +12,15 @@ public class MultiplicativeCipher {
     public static String checkPlainString() {
         boolean flag = true;
         String str = "";
+        String ans="";
         while (flag) {
 
-            String ans = scanner.next();
+            do {
+                System.out.print("Enter a non-empty string with small alphabets and spaces: ");
+                ans = scanner.nextLine().trim(); 
+            } while (ans.isEmpty());
+
+            System.out.println(ans);
             if (isPlainText(ans)) {
                 flag = false;
                 str = ans;
@@ -27,15 +33,19 @@ public class MultiplicativeCipher {
     }
 
     public static boolean isPlainText(String str) {
-        return str.matches("[a-z]+");
+        return str.matches("^[a-z ]*$");
     }
 
     public static String checkCypherString() {
         boolean flag = true;
         String str = "";
+        String ans ="";
         while (flag) {
+            do {
+                System.out.print("Enter a non-empty string with capital alphabets and spaces: ");
+                ans = scanner.nextLine().trim(); 
+            } while (ans.isEmpty());
 
-            String ans = scanner.next();
             if (isCypherText(ans)) {
                 flag = false;
                 str = ans;
@@ -48,7 +58,7 @@ public class MultiplicativeCipher {
     }
 
     public static boolean isCypherText(String str) {
-        return str.matches("^[A-Z]+$");
+        return str.matches("^[A-Z ]*$");
     }
 
     public static long CheckIntegerInput() {
@@ -69,17 +79,36 @@ public class MultiplicativeCipher {
         return ans;
     }
 
+
     public static boolean isKey(String str) {
-        return str.matches("^[0-9]+$");
+        boolean fl=false;
+        if(str.matches("^[0-9]+$")){
+            int intValue = Integer.parseInt(str)%26;
+            fl =isValidKey(intValue);
+        }
+        return fl ;
+    }
+
+    public static boolean isValidKey(int x){
+        boolean found = false;
+        for (int number : index) {
+            if (number == x) {
+                found = true;
+                break;
+            }
+        }
+        if(!found){
+            System.out.println("enter a valid num");
+        }
+        return found;
     }
 
     public static int checkInitalInput() {
         boolean flag = true;
         int ans = 0;
-
         while (flag) {
 
-            String userInput = scanner.next();
+            String userInput = scanner.next().trim();
             if (isCmd(userInput)) {
                 ans = Integer.parseInt(userInput) % 26;
                 flag = false;
@@ -96,11 +125,22 @@ public class MultiplicativeCipher {
 
     public static void Encryption(String text, long key) {
 
+        
+        
         StringBuffer result = new StringBuffer();
-
+        
         for (int i = 0; i < text.length(); i++) {
-            long ch = (long) ((((int) text.charAt(i) - 97) * key) % 26);
-            // System.out.println((int)text.charAt(i) - 97);
+            if((int) text.charAt(i) ==32){
+                result.append(" ");
+                continue;
+            }
+
+            int c= (int) text.charAt(i) - 97;
+            System.out.println(text.charAt(i));
+            if(c<key){
+                c+=26;
+            }
+            long ch = (long) (( c * key) % 26);
             result.append(ARR[(int) ch]);
             ch = 0;
         }
@@ -109,33 +149,34 @@ public class MultiplicativeCipher {
     }
 
     public static void Decryption(String text, long key) {
+        System.out.println("yes");
         StringBuffer result = new StringBuffer();
-
+        
         long kInverse = 0;
-        // only these values have an actuall inverse in multiplicative inverse
-        // int inverse[]=[1,9,21,15,3,19,7,23,11,5,17,25];
-
+        
         for (int z = 0; z < index.length; z++) {
-            // p * n = 1 mod 26
-            // 1==p*nmod 26
             long CHACHA = (key * index[z]) % 26;
-            // System.out.println(kInverse+"U");
-
+            
             if (CHACHA == 1) {
                 kInverse = index[z];
                 break;
             }
         }
-
+        
         for (int i = 0; i < text.length(); i++) {
+
+            if((int) text.charAt(i) ==32){
+                result.append(" ");
+                continue;
+            }
+
             int c = (int) text.charAt(i) - 65;
-            // System.out.println(kInverse+"U");
 
             long ch = (long) ((c * kInverse) % 26);
             result.append(arr[(int) ch]);
             ch = 0;
         }
-        System.out.println("your Cipher text " + text); // JCTUJ
+        System.out.println("your Cipher text " + text); 
         System.out.println("your plain text: " + result);
     }
 
