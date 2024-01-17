@@ -13,9 +13,15 @@ public class AditiveCipher {
     public static String checkPlainString() {
         boolean flag = true;
         String str = "";
+        String ans="";
         while (flag) {
 
-            String ans = scanner.next();
+            do {
+                System.out.print("Enter a non-empty string with small alphabets and spaces: ");
+                ans = scanner.nextLine().trim(); 
+            } while (ans.isEmpty());
+
+            System.out.println(ans);
             if (isPlainText(ans)) {
                 flag = false;
                 str = ans;
@@ -28,15 +34,19 @@ public class AditiveCipher {
     }
 
     public static boolean isPlainText(String str) {
-        return str.matches("[a-z]+");
+        return str.matches("^[a-z ]*$");
     }
 
     public static String checkCypherString() {
         boolean flag = true;
         String str = "";
+        String ans ="";
         while (flag) {
+            do {
+                System.out.print("Enter a non-empty string with capital alphabets and spaces: ");
+                ans = scanner.nextLine().trim(); 
+            } while (ans.isEmpty());
 
-            String ans = scanner.next();
             if (isCypherText(ans)) {
                 flag = false;
                 str = ans;
@@ -49,7 +59,7 @@ public class AditiveCipher {
     }
 
     public static boolean isCypherText(String str) {
-        return str.matches("^[A-Z]+$");
+        return str.matches("^[A-Z ]*$");
     }
 
     public static long CheckIntegerInput() {
@@ -99,8 +109,16 @@ public class AditiveCipher {
         StringBuffer result = new StringBuffer();
 
         for (int i = 0; i < text.length(); i++) {
-            long ch = (long) ((((int) text.charAt(i) - 97) + key) % 26);
-            // System.out.println((int)text.charAt(i) - 97);
+            if((int) text.charAt(i) ==32){
+                result.append(" ");
+                continue;
+            }
+            int c= (int) text.charAt(i) - 97;
+            System.out.println(text.charAt(i));
+            if(c<key){
+                c+=26;
+            }
+            long ch = (long) ((c + key) % 26);
             result.append(ARR[(int) ch]);
             ch = 0;
         }
@@ -112,14 +130,15 @@ public class AditiveCipher {
         StringBuffer result = new StringBuffer();
 
         for (int i = 0; i < text.length(); i++) {
+            if((int) text.charAt(i) ==32){
+                result.append(" ");
+                continue;
+            }
             int c = (int) text.charAt(i) - 65;
             if (c < key) {
                 c += 26;
             }
             long ch = (long) ((c - key) % 26);
-            // System.out.println((int) text.charAt(i));
-            // System.out.println(c);
-            // System.out.println(ch);
             result.append(arr[(int) ch]);
             ch = 0;
         }
@@ -135,6 +154,7 @@ public class AditiveCipher {
         }
 
         for (int i = 0; i < 26; i++) {
+            
             int c = (int) cText.charAt(0) - 65;
 
             if (c < i) {
