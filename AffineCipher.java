@@ -116,26 +116,6 @@ public class AffineCipher {
         return str.matches("^[0-9]+$");
     }
 
-    public static int checkInitalInput() {
-        boolean flag = true;
-        int ans = 0;
-        while (flag) {
-
-            String userInput = scanner.next().trim();
-            if (isCmd(userInput)) {
-                ans = Integer.parseInt(userInput) % 26;
-                flag = false;
-            } else {
-                System.out.println("press a valid key between 1-4");
-            }
-        }
-        return ans;
-    }
-
-    public static boolean isCmd(String str) {
-        return str.matches("[0-4]");
-    }
-
     private static boolean isSame(String str1, String str2) {
         // System.out.println("running");
         if (str1.equals(str2)) {
@@ -257,14 +237,15 @@ public class AffineCipher {
 
     public static void main(String args[]) {
 
-        while (true) {
-            System.out.println("Enter a command: ");
-            System.out.println("1 to Encryption");
-            System.out.println("2 to Decryption");
-            System.out.println("3 to Rowbustway ");
-            System.out.println("4 to Exit");
+        System.out.println("1 to Encryption");
+        System.out.println("2 to Decryption");
+        System.out.println("3 to Rowbustway ");
+        System.out.println("4 to Exit");
+        int userInput;
+        do {
+            System.out.print("Enter a command: ");
 
-            int userInput = checkInitalInput();
+             userInput = scanner.nextInt();
 
             if (userInput == 4) {
                 System.out.println("Exiting program...");
@@ -278,7 +259,7 @@ public class AffineCipher {
                     String pstr = checkPlainString();
                     System.out.print("Enter key1: ");
                     long mK1 = checkK1();
-                    System.out.print("Enter key2 : ");
+                    System.out.print("Enter key2: ");
                     long aK2 = checkK2();
                     Encryption(pstr, mK1, aK2);
                     break;
@@ -305,8 +286,7 @@ public class AffineCipher {
                 default:
                     System.out.println("press a valid key between 1-4");
                     break;
-            }
-
+            } 
+        }while (userInput != 4);
         }
     }
-}
