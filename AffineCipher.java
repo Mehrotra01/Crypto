@@ -136,6 +136,14 @@ public class AffineCipher {
         return str.matches("[0-4]");
     }
 
+    private static boolean isSame(String str1, String str2) {
+        // System.out.println("running");
+        if (str1.equals(str2)) {
+            return true;
+        }
+        return false;
+    }
+
     public static void Encryption(String text, long key1, long key2) {
 
         StringBuffer result = new StringBuffer();
@@ -178,7 +186,7 @@ public class AffineCipher {
             }
 
             int c = (int) text.charAt(i) - 65;
-            if (c < key2) {
+            while (c < key2) {
                 c += 26;
             }
             long ch = (long) (((c - key2) * kInverse) % 26);
@@ -196,7 +204,8 @@ public class AffineCipher {
             return;
         }
 
-        for (int i = 0; i < index.length; i++) {
+        for (int i : index) {
+            boolean match=false;
             long kInverse = 0;
             for (int z = 0; z < index.length; z++) {
                 long CHACHA = (i * index[z]) % 26;
@@ -205,22 +214,44 @@ public class AffineCipher {
                     break;
                 }
             }
+
             for (int z = 0; z < 26; z++) {
+                String check = "";
+                for (int x = 0; x < pText.length(); x++) {
 
-                int c = (int) cText.charAt(0) - 65;
-                if (c < z) {
-                    c += 26;
+                    if ((int) pText.charAt(x) == 32) {
+                        check += " ";
+                        continue;
+                    }
+
+                    int c = (int) cText.charAt(x) - 65;
+                    // System.out.println("c before " + c);
+                    while (c < z) {
+                        c += 26;
+                    }
+
+                    int ch = (((c - z) * (int) kInverse) % 26);
+                    // System.out.println("k1 " + i + " k2 " + z + " ch " + ch + " c " + c);
+                    check += arr[ch];
+
+                    if (arr[ch] != pText.charAt(x)) {
+                        break;
+                    }
                 }
+                if (check.length() == pText.length()) {
 
-                int ch = (((c - z) * (int) kInverse) % 26);
-
-                if (arr[ch] == pText.charAt(0)) {
-                    System.out.println("Your key is " + i);
-                    break;
+                    if (isSame(check, pText)) {
+                        System.out.println("You hacked the cipher");
+                        System.out.println("Your key are k1: " + i + " k2: " + z);
+                        break;
+                        // break;
+                    }
 
                 }
             }
-
+            if(match){
+                break;
+            }
         }
     }
 
@@ -230,7 +261,7 @@ public class AffineCipher {
             System.out.println("Enter a command: ");
             System.out.println("1 to Encryption");
             System.out.println("2 to Decryption");
-            System.out.println("3 to Rowbustway (not completed)");
+            System.out.println("3 to Rowbustway ");
             System.out.println("4 to Exit");
 
             int userInput = checkInitalInput();
@@ -251,7 +282,7 @@ public class AffineCipher {
                     long aK2 = checkK2();
                     Encryption(pstr, mK1, aK2);
                     break;
-                    case 2:
+                case 2:
                     System.out.println("Decryption");
                     System.out.println("Enter cypher text");
                     String cText = checkCypherString();
