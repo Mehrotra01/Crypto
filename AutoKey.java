@@ -1,16 +1,12 @@
 import java.util.Scanner;
-
 public class autokeyCipher {
 
-    static String ARR = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    static String abc = "abcdefghijklmnopqrstuvwxyz";
-
-    static char arr[] = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's',
-            't', 'u', 'v', 'w', 'x', 'y', 'z' };
+    private static String ARR = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private static String abc = "abcdefghijklmnopqrstuvwxyz";
 
     private static Scanner sc = new Scanner(System.in);
 
-    public static String checkPlainString() {
+    private static String checkPlainString() {
         boolean flag = true;
         String str = "";
         String ans = "";
@@ -20,7 +16,6 @@ public class autokeyCipher {
                 ans = sc.nextLine().trim();
             } while (ans.isEmpty());
 
-            // System.out.println(ans);
             if (isPlainText(ans)) {
                 flag = false;
                 str = ans;
@@ -32,11 +27,11 @@ public class autokeyCipher {
         return str;
     }
 
-    public static boolean isPlainText(String str) {
+    private static boolean isPlainText(String str) {
         return str.matches("^[a-z ]*$");
     }
 
-    public static int CheckIntegerInput() {
+    private static int CheckIntegerInput() {
         boolean flag = true;
         int ans = 0;
         while (flag) {
@@ -45,7 +40,7 @@ public class autokeyCipher {
             if (isKey(userInput)) {
                 ans = Integer.parseInt(userInput) % 26;
                 flag = false;
-                System.out.println("Your key is " + ans);
+                // System.out.println("Your key is " + ans);
             } else {
                 System.out.println("Enter a valid key");
             }
@@ -53,11 +48,11 @@ public class autokeyCipher {
         return ans;
     }
 
-    public static boolean isKey(String str) {
+    private static boolean isKey(String str) {
         return str.matches("^[0-9]+$");
     }
 
-    public static int checkInitalInput() {
+    private static int checkInitalInput() {
         boolean flag = true;
         int ans = 0;
         while (flag) {
@@ -73,8 +68,32 @@ public class autokeyCipher {
         return ans;
     }
 
-    public static boolean isCmd(String str) {
+    private static boolean isCmd(String str) {
         return str.matches("[0-4]");
+    }
+
+    private static String checkCypherString() {
+        boolean flag = true;
+        String str = "";
+        String ans = "";
+        while (flag) {
+            do {
+                ans = sc.nextLine().trim();
+            } while (ans.isEmpty());
+
+            if (isCypherText(ans)) {
+                flag = false;
+                str = ans;
+            } else {
+                System.out.println("The string contains lowerCase letters or symbols.");
+            }
+
+        }
+        return str;
+    }
+
+    private static boolean isCypherText(String str) {
+        return str.matches("^[A-Z ]*$");
     }
 
     private static String encryption(String pText, int key) {
@@ -117,7 +136,7 @@ public class autokeyCipher {
                 c += 26;
             }
             int total = (c - newKey) % 26;
-            res += arr[total];
+            res += abc.charAt(total);
             newKey = total;
         }
         return res;
@@ -172,7 +191,6 @@ public class autokeyCipher {
                     System.out.print("Enter the Cipher Text: ");
                     String BCStr = checkCypherString();
                     bruteForce(BEStr, BCStr);
-                    // System.out.println(key);
                     break;
                 case 0:
                     System.out.println("Exiting program.");
@@ -182,30 +200,5 @@ public class autokeyCipher {
             }
 
         } while (userInput != 0);
-
-    }
-
-    public static String checkCypherString() {
-        boolean flag = true;
-        String str = "";
-        String ans = "";
-        while (flag) {
-            do {
-                ans = sc.nextLine().trim();
-            } while (ans.isEmpty());
-
-            if (isCypherText(ans)) {
-                flag = false;
-                str = ans;
-            } else {
-                System.out.println("The string contains lowerCase letters or symbols.");
-            }
-
-        }
-        return str;
-    }
-
-    public static boolean isCypherText(String str) {
-        return str.matches("^[A-Z ]*$");
     }
 }
