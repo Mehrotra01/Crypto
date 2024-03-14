@@ -227,6 +227,7 @@ public class playFair {
         System.out.println("0 to Exit");
         System.out.println("1 to Encryption");
         System.out.println("2 to Decryption");
+        System.out.println("3 to Update the Key");
         int userInput;
         boolean hasRun = false;
         do {
