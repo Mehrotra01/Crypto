@@ -1,6 +1,9 @@
 ```
 It's not the best code but yes it's what i can build on my own knowledge yet anyone can update and built it a better way 
 it surely have some big problems hope you can solve them
+
+only usaable in browser's concole 😂😂😂
+
 ```
 
 function encryptAutokey(plaintext, key) {
